@@ -16,5 +16,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
+    Route::get('attendance/sync', [AttendanceController::class, 'sync'])->name('attendance.sync');
     Route::resource('attendance', AttendanceController::class);
 });

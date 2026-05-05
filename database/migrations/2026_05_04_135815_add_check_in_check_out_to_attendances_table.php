@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function run(): void
+    public function up(): void
     {
         Schema::table('attendances', function (Blueprint $table) {
             $table->time('check_in')->nullable()->after('attendance_date');

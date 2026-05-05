@@ -10,9 +10,14 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="h4 mb-0 text-primary">List of Attendances</h3>
-                    <a href="{{ route('attendance.create') }}" class="btn btn-primary shadow-sm">
-                        <i class="bi bi-plus-circle me-1"></i> Add New Attendance
-                    </a>
+                    <div>
+                        <a href="{{ route('attendance.sync') }}" class="btn btn-success shadow-sm me-2">
+                            <i class="bi bi-arrow-repeat me-1"></i> Sync from ZKTeco
+                        </a>
+                        <a href="{{ route('attendance.create') }}" class="btn btn-primary shadow-sm">
+                            <i class="bi bi-plus-circle me-1"></i> Add New Attendance
+                        </a>
+                    </div>
                 </div>
 
                 @if(session('success'))
