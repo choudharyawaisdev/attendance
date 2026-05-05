@@ -15,6 +15,8 @@ return new class extends Migration
             $blueprint->id();
             $blueprint->foreignId('user_id')->constrained()->onDelete('cascade');
             $blueprint->date('attendance_date');
+            $blueprint->time('check_in')->nullable();
+            $blueprint->time('check_out')->nullable();
             $blueprint->enum('status', ['Present', 'Absent', 'Late', 'Excused'])->default('Present');
             $blueprint->text('notes')->nullable();
             $blueprint->timestamps();
