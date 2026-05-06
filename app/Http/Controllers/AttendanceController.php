@@ -68,6 +68,7 @@ class AttendanceController extends Controller
 
     public function sync(Request $request)
     {
+        set_time_limit(0); // Prevent timeout for long sync processes
         $ip = env('ZKTECO_IP', '192.168.1.201');
         $port = env('ZKTECO_PORT', 4370);
         
@@ -86,31 +87,27 @@ class AttendanceController extends Controller
         }
 
         $syncedCount = 0;
+        $users = User::pluck('id')->toArray(); // Get all user IDs to verify existence
+        $usersMap = User::all()->keyBy('id');
 
         foreach ($attendanceLog as $record) {
-            $zktecoId = $record['id']; // ID string from device
+            $zktecoId = (int)$record['id']; 
             
-            // User ki ID se check karein (ZKTeco device ID == User ID)
-            $user = User::where('id', $zktecoId)->first();
-            
-            if ($user) {
+            if (isset($usersMap[$zktecoId])) {
+                $user = $usersMap[$zktecoId];
                 $timestamp = Carbon::parse($record['timestamp']);
                 $date = $timestamp->format('Y-m-d');
                 $time = $timestamp->format('H:i:s');
                 
-                // Find or create attendance for this user on this date
                 $attendance = Attendance::firstOrNew([
                     'user_id' => $user->id,
                     'attendance_date' => $date,
                 ]);
 
-                // Check-in (Type 0 or State 1 typically means check in, but let's just use first punch as IN, last as OUT)
-                // If attendance doesn't exist or check_in is empty, it's check in
                 if (!$attendance->exists || empty($attendance->check_in)) {
                     $attendance->check_in = $time;
                     $attendance->status = 'Present';
                 } else {
-                    // Update check_out if the time is later than check_in
                     if (Carbon::parse($time)->gt(Carbon::parse($attendance->check_in))) {
                         $attendance->check_out = $time;
                     }
