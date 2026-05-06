@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
 
         // Adding one specific user for easy testing
         User::updateOrCreate(
-            ['email' => 'admin@admin.com'],
+            ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin User',
                 'password' => Hash::make('password'),
