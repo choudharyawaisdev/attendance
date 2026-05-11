@@ -68,23 +68,8 @@ class AttendanceController extends Controller
 
     public function sync(Request $request)
     {
-        set_time_limit(0); // Prevent timeout for long sync processes
-        $ip = env('ZKTECO_IP', '192.168.1.201');
-        $port = env('ZKTECO_PORT', 4370);
-        
-        $zk = new ZKTeco($ip, $port);
-        $connected = $zk->connect();
-
-        if (!$connected) {
-            return redirect()->route('attendance.index')->with('error', 'Unable to connect to ZKTeco device.');
-        }
-
-        $attendanceLog = $zk->getAttendance();
-        $zk->disconnect();
-
-        if (empty($attendanceLog)) {
-            return redirect()->route('attendance.index')->with('success', 'Connected to device, but no attendance records found.');
-        }
+        return redirect()->route('attendance.index')->with('error', 'Manual sync is disabled on the live server. Attendance is synced automatically via your office PC.');
+    }
 
         $syncedCount = 0;
         $usersMap = User::all()->keyBy('id');

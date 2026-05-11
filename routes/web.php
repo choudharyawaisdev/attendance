@@ -20,9 +20,6 @@ Route::middleware([
     Route::resource('attendance', AttendanceController::class);
 });
 
-// API Route for Local Agent to push data to Server
-Route::post('/api/sync-from-local', [AttendanceController::class, 'receiveFromLocal']);
-
 // ZKTeco ADMS (Automatic Push) Endpoints
 Route::get('/iclock/cdata', [AttendanceController::class, 'admsHandshake']);
 Route::post('/iclock/cdata', [AttendanceController::class, 'admsReceiveData']);

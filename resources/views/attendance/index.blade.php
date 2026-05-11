@@ -167,9 +167,9 @@
                 <p class="text-muted mb-0">Track and manage employee attendance records with ease.</p>
             </div>
             <div class="col-md-4 text-md-right mt-3 mt-md-0">
-                <a href="{{ route('attendance.sync') }}" class="btn btn-outline-orange mr-2">
+                <button type="button" onclick="alert('Manual sync from the web interface is disabled because the server is hosted online (Shared Hosting) and cannot directly connect to your local office machine.\n\nThe attendance is synced automatically via your office PC Task Scheduler.')" class="btn btn-outline-orange mr-2">
                     <i class="fas fa-sync-alt mr-1"></i> Sync ZKTeco
-                </a>
+                </button>
                 <a href="{{ route('attendance.create') }}" class="btn btn-orange shadow-sm">
                     <i class="fas fa-plus mr-1"></i> New Entry
                 </a>
