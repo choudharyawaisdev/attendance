@@ -15,6 +15,10 @@ class AttendanceLog extends Model
         'log_id',
     ];
 
+    protected $casts = [
+        'log_time' => 'datetime',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
